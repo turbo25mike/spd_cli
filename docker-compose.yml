@@ -1,6 +1,6 @@
 version: "2"
 services:
-    api:
+    web:
         build: .
         ports:
             - "9800:5000"
