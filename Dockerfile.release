@@ -6,8 +6,10 @@ COPY project.json .
 RUN ["dotnet", "restore"]
 
 COPY . /app
-RUN ["dotnet", "publish", "--output", "\"bin/dist\""]
+RUN ["dotnet", "publish", "--output", "/bin/dist"]
+
+WORKDIR /bin/dist
 
 EXPOSE 5000/tcp
 
-ENTRYPOINT ["dotnet", "bin/dist/spd_cli"]
+ENTRYPOINT ["dotnet", "spd_cli"]
