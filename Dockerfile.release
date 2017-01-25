@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore-build
+FROM microsoft/aspnetcore-build:latest
 
 WORKDIR /app
 
@@ -8,7 +8,6 @@ RUN ["dotnet", "restore"]
 COPY . /app
 RUN ["dotnet", "publish", "--output", "\"bin/dist\""]
 
-WORKDIR /app/bin/dist
 EXPOSE 5000/tcp
 
-ENTRYPOINT ["dotnet", "spd_cli.dll"]
+ENTRYPOINT ["bin/dist", "spd_cli"]
