@@ -1,7 +1,4 @@
-FROM microsoft/dotnet:latest
-
-RUN apt-get update
-RUN apt-get install -y build-essential nodejs nodejs-legacy
+FROM microsoft/aspnetcore-build
 
 WORKDIR /app
 
@@ -9,7 +6,7 @@ COPY project.json .
 RUN ["dotnet", "restore"]
 
 COPY . /app
-RUN ["dotnet", "publish", "--output", "bin/dist"]
+RUN ["dotnet", "publish", "--output", "\"bin/dist\""]
 
 WORKDIR /app/bin/dist
 EXPOSE 5000/tcp
