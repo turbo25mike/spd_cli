@@ -8,6 +8,6 @@ RUN ["dotnet", "restore"]
 COPY . /app
 RUN ["dotnet", "publish", "-o", "/bin/dist", "-c", "release"]
 
-EXPOSE 5000/tcp
+EXPOSE 80/tcp
 
 ENTRYPOINT ["dotnet", "/bin/dist/spd_cli.dll"]
