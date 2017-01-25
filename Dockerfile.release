@@ -10,4 +10,4 @@ RUN ["dotnet", "publish", "--output", "\"bin/dist\""]
 
 EXPOSE 5000/tcp
 
-ENTRYPOINT ["bin/dist", "spd_cli"]
+ENTRYPOINT ["dotnet", "bin/dist/spd_cli"]
