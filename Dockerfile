@@ -5,10 +5,9 @@ RUN apt-get install -y build-essential nodejs nodejs-legacy
 
 WORKDIR /app
 
-COPY project.json .
-RUN ["dotnet", "restore"]
-
 COPY . /app
+
+RUN ["dotnet", "restore"]
 RUN ["dotnet", "build"]
 
 EXPOSE 5001/tcp
