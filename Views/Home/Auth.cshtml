@@ -16,7 +16,7 @@
 
     alert(getParameterByName('state'));
 
-    uri = window.location.protocol + '//' + window.location.hostname + ':5000/api/auth/' + getParameterByName('state') + '/code';
+    uri = window.location.protocol + '//' + window.location.hostname + ':5000/api/auth?state=' + getParameterByName('state') + '&code=' + getParameterByName('code');
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", uri, true);
     xmlhttp.send();
