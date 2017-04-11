@@ -1,0 +1,154 @@
+.banner{
+    overflow: hidden;
+    max-height: 450px;
+    padding:0;
+}
+
+.banner::after {
+            background: -moz-linear-gradient(top, rgba(0,0,0,0.5) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.7) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, rgba(0,0,0,0.5) 0%,rgba(255,255,255,0) 50%,rgba(0,0,0,0.7) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,rgba(255,255,255,0) 50%,rgba(0,0,0,0.7) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80000000', endColorstr='#b3000000',GradientType=0 ); /* IE6-9 */
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            content: '';
+            z-index: 1;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+.banner .logo {
+            width: 100%;
+            max-width: 750px;
+            text-align: center;
+            padding-top: 150px;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            top: 0;
+            position: absolute;
+            z-index: 2;
+        }
+
+.banner .text {
+            color: ghostwhite;
+            font-family: Dosis, Arial, sans-serif;
+            font-size: 2em;
+            width: 100%;
+            max-width: 750px;
+            text-align: center;
+            padding-bottom: 50px;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            z-index: 2;
+        }
+
+@media (max-width: 767px) {
+    .banner .text {
+        padding-bottom: 10px;
+    }
+}
+
+.cross-platform {
+    margin-top: 10px;
+    background: #161c25 url(../../../assets/images/background-crossplatform.png) no-repeat right top;
+    padding:0;
+    overflow: hidden;
+    padding-top: 120px;
+    padding-bottom: 120px;
+}
+
+
+
+.case-study {
+    background: url(../../../assets/images/automap.jpg) top center no-repeat;
+    background-size: cover;
+    height: 500px;
+}
+
+    .case-study case-study-inner::after {
+        background: -moz-linear-gradient(top, rgba(0,0,0,0.8) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.7) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, rgba(0,0,0,0.8) 0%,rgba(255,255,255,0) 50%,rgba(0,0,0,0.7) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%,rgba(255,255,255,0) 50%,rgba(0,0,0,0.7) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80000000', endColorstr='#b3000000',GradientType=0 ); /* IE6-9 */
+    }
+
+.case-study-col {
+    color: #fdfdf9;
+    
+}
+
+.black {
+    color: #222;
+}
+
+.left-bar {
+    border-left: 1px solid #fdfdf9;
+}
+
+.right-bar {
+    border-left: 1px solid #fdfdf9;
+}
+
+.section-text {
+    text-align: left;
+    font-size: 1.14286rem;
+    letter-spacing: .05em;
+    margin: 0 0 1.42857rem;
+    padding: 0;
+    font-weight: 400;
+    color: #fdfdf9;
+    -webkit-font-smoothing: antialiased;
+    -khtml-font-smoothing: antialiased;
+    -apple-font-smoothing: antialiased;
+    font-smooth: always;
+    text-rendering: optimizelegibility;
+    text-rendering: geometricPrecision;
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+}
+
+.desktop {
+    width: 647px;
+    margin-left: 120px;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.tablet {
+    position: absolute;
+    top: 332px;
+    width: 270px;
+    margin-left: 20px;
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    border: 0;
+}
+
+.mobile {
+    position: absolute;
+    bottom: 4px;
+    width: 186px;
+    margin-left: 122px;
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    border: 0;
+}
+
+
+
+

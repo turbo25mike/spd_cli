@@ -12,6 +12,7 @@ import { CareersComponent } from './components/careers/careers.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SitemapComponent } from './components/sitemap/sitemap.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
 
 @NgModule({
@@ -25,7 +26,8 @@ import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
         ServicesComponent,
         WorkComponent,
         HomeComponent,
-        SitemapComponent
+        SitemapComponent,
+        DashboardComponent
     ],
     imports: [
         BsDropdownModule.forRoot(),
@@ -40,6 +42,7 @@ import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
             { path: 'careers', component: CareersComponent },
             { path: 'contact', component: ContactComponent },
             { path: 'sitemap', component: SitemapComponent },
+            { path: 'dashboard', component: DashboardComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ]
