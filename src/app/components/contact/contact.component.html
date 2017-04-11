@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-12 portland">
+        <div class="row shadow">
+            <div class="col-md-offset-2 col-md-5 white-text portland-col">
+                <p class="header temp white-text">{{pdx.temperatureF}} / {{pdx.temperatureC}}</p>
+                <h2 class="header white-text">{{pdx.coord}}</h2>
+                <span [class]="pdx.weather"></span>
+            </div>
+            <div class="col-md-3 portland-col">
+                <div class="clock">
+                    <div class="clock-content">
+                        <h1 class="header white-text center-text">PDX</h1>
+                        <p class="white-text center-text">PORTLAND, OR | {{ pdx.date | date:'hh:mm a' }}</p>
+                    </div>
+                    <span class="clock-hand hours" [style.transform]="pdx.hoursTransform"></span>
+                    <span class="clock-hand minutes" [style.transform]="pdx.minutesTransform"></span>
+                    <span class="clock-hand seconds" [style.transform]="pdx.secondsTransform"></span>
+                    <span class="clock-hand circle"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

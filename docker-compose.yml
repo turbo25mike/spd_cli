@@ -1,8 +1,0 @@
-version: "2"
-services:
-    web:
-        build: 
-            context: .
-            dockerfile: Dockerfile.release
-        ports:
-            - "5001:80"

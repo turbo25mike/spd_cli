@@ -1,0 +1,107 @@
+/* You can add global styles to this file, and also import other style files */
+
+@media (max-width: 767px) {
+    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
+    /*.body-content {
+        padding-top: 50px;
+    }*/
+}
+
+section {
+    float: left;
+}
+
+    section.white {
+        background-color: white;
+    }
+
+    section.gray {
+        background-color: slategray;
+        color: white;
+    }
+
+    section.text {
+        padding: 20px;
+        text-align: center;
+    }
+
+.shadow {
+    background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80000000', endColorstr='#b3000000', GradientType=0);
+    /* IE6-9 */
+}
+
+.white-link{
+    color:#fdfdf9;
+    text-decoration: underline;
+}
+
+.white-link:hover{
+    color:#fdfdf9;
+    text-decoration: underline;
+}
+
+.header  {
+    font-family: Dosis, Arial, sans-serif;
+    font-size: 3.5rem;
+    letter-spacing: 1.9px;
+    text-align: left;
+    margin-bottom: 14px;
+    text-rendering: geometricPrecision;
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+    color: #222;
+    -webkit-font-smoothing: antialiased;
+    -khtml-font-smoothing: antialiased;
+    -apple-font-smoothing: antialiased;
+    font-smooth: always;
+    text-rendering: optimizelegibility;
+    text-rendering: geometricPrecision;
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+}
+
+.white-text{
+    color:#fdfdf9;
+}
+
+.center-text{
+  text-align: center;   
+}
+
+.section-hr {
+    background-color: #fdfdf9;
+    margin-left: 0;
+    display: block;
+    margin: 0 10px 17px;
+    max-width: 80px;
+    height: 3px;
+    border-width: 0;
+    box-sizing: content-box;
+}
+
+.hr-black {
+    background-color: #222;
+}
+
+.box-btn {
+    font-family: Dosis, Arial, sans-serif;
+    font-weight: 600;
+    border: 2px solid #222;
+    background-color: ghostwhite;
+    color: #222;
+    padding: 10px;
+}
+
+    .service-btn:hover {
+        text-decoration: none;
+        background-color: #222;
+        color: ghostwhite;
+    }

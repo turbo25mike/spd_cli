@@ -1,0 +1,25 @@
+.join{
+    background: url(../../../assets/images/work.jpg) bottom center no-repeat;
+    background-size: 110%;
+    transition: all .5s ease-in-out;
+    text-align: center;
+    font-size: 1.5em;
+    padding: 100px 0;
+}
+
+.join:hover{
+    background-size: 100%;
+}
+
+@media (max-width: 767px) {
+    .join {
+        background-size: cover;
+    }
+    .join:hover {
+        background-size: cover;
+    }
+}
+
+.no-open{
+    padding: 50px 0;
+}
