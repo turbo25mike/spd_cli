@@ -2,7 +2,8 @@
 
 import { Injectable }      from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
+import 'rxjs/add/operator/filter';
 
 // Avoid name not found warnings
 //declare var Auth0Lock: any;
@@ -12,13 +13,22 @@ let Auth0Lock = require('auth0-lock').default;
 @Injectable()
 export class Auth {
     // Configure Auth0
-    lock = new Auth0Lock('VRuQOIlWkBs3WEwjwafACwuY43tWZ5Tn', 'spd.auth0.com', {});
+    lock = new Auth0Lock('VRuQOIlWkBs3WEwjwafACwuY43tWZ5Tn', 'spd.auth0.com');
 
     constructor(public router: Router) {
         // Add callback for lock `authenticated` event
-        this.lock.on("authenticated", (authResult) => {
-            localStorage.setItem('id_token', authResult.idToken);
-            this.router.navigate(['/dashboard']);
+        // this.lock.on("authenticated", (authResult) => {
+        //     localStorage.setItem('id_token', authResult.idToken);
+        // });
+        this.router.events
+          .filter(event => event instanceof NavigationStart)
+          .filter((event: NavigationStart) => (/access_token|id_token|error/).test(event.url))
+          .subscribe(() => {
+            this.lock.resumeAuth(window.location.hash, (error, authResult) => {
+              if (error) return console.log(error);
+              localStorage.setItem('token', authResult.idToken);
+              this.router.navigate(['/dashboard']);
+            });
         });
     }
 

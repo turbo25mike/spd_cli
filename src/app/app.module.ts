@@ -14,6 +14,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SitemapComponent } from './components/sitemap/sitemap.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
+import { AUTH_PROVIDERS } from 'angular2-jwt';
+
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -28,6 +30,9 @@ import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
         HomeComponent,
         SitemapComponent,
         DashboardComponent
+    ],
+    providers: [
+        AUTH_PROVIDERS
     ],
     imports: [
         BsDropdownModule.forRoot(),

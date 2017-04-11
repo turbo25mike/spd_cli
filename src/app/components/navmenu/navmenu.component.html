@@ -31,6 +31,9 @@
                     <button class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
                     <button class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
                 </li>
+                <li>
+                  {{auth.authenticated()}}
+                </li>
             </ul>
 
             <ul class='nav navbar-nav  navbar-right'>
