@@ -14,8 +14,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SitemapComponent } from './components/sitemap/sitemap.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
-import { AUTH_PROVIDERS } from 'angular2-jwt';
+import {Http, RequestOptions} from '@angular/http';
+import {AuthHttp, AuthConfig} from 'angular2-jwt';
 
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp( new AuthConfig({}), http, options);
+}
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -32,7 +36,11 @@ import { AUTH_PROVIDERS } from 'angular2-jwt';
         DashboardComponent
     ],
     providers: [
-        AUTH_PROVIDERS
+      {
+        provide: AuthHttp,
+        useFactory: authHttpServiceFactory,
+        deps: [ Http, RequestOptions ]
+      }
     ],
     imports: [
         BsDropdownModule.forRoot(),
