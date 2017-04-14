@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {AuthHttp} from 'angular2-jwt';
 import 'rxjs/Rx';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class StatusService {
@@ -14,7 +15,7 @@ export class StatusService {
     constructor(http: Http, authHttp: AuthHttp) {
         this.http = http;
         this.authHttp = authHttp;
-        this.uri = window.location.protocol + '//' + window.location.hostname + ':5000/api/status/';
+        this.uri = environment.apiUri + 'status/';
     }
 
     private get(route) {

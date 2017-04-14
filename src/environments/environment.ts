@@ -4,5 +4,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUri: 'http://spdapi-432f0964-1.1a8d5e10.cont.dockerapp.io:5000/api/'
 };
