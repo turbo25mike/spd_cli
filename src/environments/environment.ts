@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUri: 'http://spdapi-432f0964-1.1a8d5e10.cont.dockerapp.io:5000/api/'
+  apiUri: 'http://localhost:5000/api/'
 };
