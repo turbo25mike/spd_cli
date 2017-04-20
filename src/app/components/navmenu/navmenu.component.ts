@@ -10,7 +10,7 @@ import { Auth } from '../../services/auth.service';
 export class NavMenuComponent {
     isCollapsed: boolean = true;
 
-    constructor(private auth: Auth) {
+    constructor(public auth: Auth) {
      }
 
     toggleCollapse(): void {

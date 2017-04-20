@@ -1,3 +1,10 @@
+.fan-header {
+    height: 268px;
+    position: relative;
+    z-index: 1;
+    padding: 0 0 50px 0;
+}
+
 .banner{
     overflow: hidden;
     max-height: 450px;
@@ -82,7 +89,7 @@
 
 .case-study-col {
     color: #fdfdf9;
-    
+
 }
 
 .black {
@@ -148,7 +155,3 @@
     height: auto;
     border: 0;
 }
-
-
-
-

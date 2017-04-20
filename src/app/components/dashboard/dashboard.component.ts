@@ -14,6 +14,7 @@ export class DashboardComponent {
     public apiLoggedIn: string;
     public eventLog: EventLog;
     public searchPos: number = 0;
+    public currentWorkID: number;
 
     constructor(public service: StatusService, public apiService: ApiService) {
         this.eventLog = new EventLog();
@@ -38,7 +39,23 @@ export class DashboardComponent {
       switch(actions[0].toLowerCase())
       {
         case 'add':
-          this.eventLog.SetSuccess(userInput, 'Yea!  You we are adding.');
+          var postObj = {};
+          switch(actions[1].toLowerCase()){
+            case 'org':
+                postObj = {Name: actions[2]};
+            break;
+            default:
+              this.eventLog.SetError(userInput, actions[1] + " was not found.");
+              return;
+          }
+
+          this.apiService.Post('org', { Name: actions[2]}).subscribe(
+            res => this.eventLog.SetSuccess(userInput, res.text()),
+            err => this.eventLog.SetError(userInput, err.statusText)
+          );
+        break;
+        case 'cd':
+
         break;
         case 'get':
             this.apiService.Get(actions[1]).subscribe(

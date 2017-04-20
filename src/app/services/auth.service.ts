@@ -8,7 +8,7 @@ import 'rxjs/add/operator/filter';
 // Avoid name not found warnings
 //declare var Auth0Lock: any;
 let Auth0Lock = require('auth0-lock').default;
-//declare var Auth0Lock: any;
+
 
 @Injectable()
 export class Auth {
@@ -22,7 +22,7 @@ export class Auth {
         // });
         this.router.events
           .filter(event => event instanceof NavigationStart)
-          .filter((event: NavigationStart) => (/access_token|id_token|error/).test(event.url))
+          .filter((event: NavigationStart) => (/access_token|id_token|token|error/).test(event.url))
           .subscribe(() => {
             this.lock.resumeAuth(window.location.hash, (error, authResult) => {
               if (error) return console.log(error);
@@ -45,6 +45,6 @@ export class Auth {
 
     public logout() {
         // Remove token from localStorage
-        localStorage.removeItem('id_token');
+        localStorage.removeItem('token');
     }
 }
