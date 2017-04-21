@@ -1,5 +1,7 @@
-dash
-<p>{{apiStatus}}</p>
+  <ul>
+    <li *ngFor="let org of orgs"><a href="#">{{org.name}}</a></li>
+  </ul>
+<p>Selected Org: {{selectedOrg}}</p>
 <p>{{apiEnvironment}}</p>
 <p>{{apiLoggedIn}}</p>
 <p>{{searchPos}}

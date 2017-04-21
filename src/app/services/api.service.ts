@@ -19,18 +19,18 @@ export class ApiService {
     }
 
     public Get(route) {
-        return this.authHttp.get(this.uri + route).map((res: Response) => res);
+        return this.authHttp.get(this.uri + route).map((res: Response) => res.json());
     }
 
     public Post(route, obj) {
-        return this.authHttp.post(this.uri + route, obj).map((res: Response) => res);
+        return this.authHttp.post(this.uri + route, obj).map((res: Response) => res.json());
     }
 
     public Put(route, obj) {
-        return this.authHttp.put(this.uri + route, obj).map((res: Response) => res);
+        return this.authHttp.put(this.uri + route, obj).map((res: Response) => res.json());
     }
-    
+
     public Delete(route) {
-        return this.authHttp.delete(this.uri + route).map((res: Response) => res);
+        return this.authHttp.delete(this.uri + route).map((res: Response) => res.json());
     }
 }

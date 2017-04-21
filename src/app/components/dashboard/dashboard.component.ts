@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { StatusService } from '../../services/status.service';
 import { ApiService } from '../../services/api.service';
+import { Auth } from '../../services/auth.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Org } from '../../models/org.model';
+import { EventLog } from '../../models/event';
 
 @Component({
     selector: 'dashboard',
-    providers: [StatusService, ApiService],
+    providers: [StatusService, ApiService, Auth],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css']
 })
@@ -15,17 +19,35 @@ export class DashboardComponent {
     public eventLog: EventLog;
     public searchPos: number = 0;
     public currentWorkID: number;
+    public orgs : Org[];
 
-    constructor(public service: StatusService, public apiService: ApiService) {
+    constructor(public service: StatusService, public apiService: ApiService, public auth: Auth, private router: Router) {
+        //this.orgs = new Array<Org>();
         this.eventLog = new EventLog();
         this.eventLog.Push('Checking Server');
-        this.service.getStatus().subscribe(res => {
-          var event = this.eventLog.Find('Checking Server');
-          event.response = 'Looking Good';
-          event.status = 'success';
-        });
-        //service.getEnvironment().subscribe(res => this.apiEnvironment = res);
-        //service.getLoggedIn().subscribe(res => this.apiLoggedIn = res);
+        this.service.getStatus().subscribe(
+          res => {
+            var event = this.eventLog.Find('Checking Server');
+            event.response = 'Looking Good';
+            event.status = 'success';
+            this.GetOrgs();
+          },
+          err=> this.HandleError(err)
+        );
+    }
+
+    private GetOrgs(){
+      this.apiService.Get('org').subscribe(
+        res => this.orgs = res as Org[],
+        err => this.HandleError(err)
+      );
+    }
+
+    public HandleError(err){
+      if(err.status === 401){
+            this.auth.logout();
+            this.router.navigate(['/home']);
+      }
     }
 
     public Execute(cmd: HTMLInputElement){
@@ -97,59 +119,4 @@ export class DashboardComponent {
       if(nextPos > -1 && nextPos < this.eventLog.events.length)
         this.searchPos += dir;
     }
-}
-
-export class Event{
-  public request: string;
-  public status: string;
-  public response: string;
-
-  public GetStatusClass(){
-    return 'list-group-item-' + this.status;
-  }
-}
-
-export class EventLog{
-  public statusMap: any;
-  public events: Event[];
-
-  constructor(){
-    this.events = new Array<Event>();
-  }
-
-  public Push(request: string){
-    var newEvent = new Event();
-    newEvent.request = request;
-    this.events.push(newEvent);
-  }
-
-  public SetSuccess(request: string, response: string){
-    this.SetResponse(request, 'success', response);
-  }
-
-  public SetInfo(request: string, response: string){
-    this.SetResponse(request, 'info', response);
-  }
-
-  public SetWarning(request: string, response: string){
-    this.SetResponse(request, 'warning', response);
-  }
-
-  public SetError(request: string, response: string){
-    this.SetResponse(request, 'danger', response);
-  }
-
-  public SetResponse(request: string, status: string, response:string){
-    var e = this.Find(request);
-    e.status = status;
-    e.response = response;
-  }
-
-  public Find(request: string){
-    for(var i = this.events.length -1; i > -1; i--){
-      if(this.events[i].request === request){
-        return this.events[i];
-      }
-    }
-  }
 }
