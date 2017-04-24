@@ -1,4 +1,5 @@
-import {Option, OptionManager} from './option';
+import { OptionManager } from './optionManager';
+import { Option } from './option';
 
 export class Model
 {

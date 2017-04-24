@@ -1,0 +1,27 @@
+<div class="console">
+  <div class="eventLog">
+    <div class="list-group">
+      <div *ngFor="let event of eventLog.events">
+        <div class="list-group-item" [ngClass]="event.GetStatusClass()" style="margin-top:3px;">
+          <h4 class="list-group-item-heading">
+            <span *ngIf="event.response == null">
+              <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+              <span class="sr-only">Loading...</span>
+            </span>
+            {{event.request}}
+          </h4>
+           <p class="list-group-item-text">{{event.response}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="consoleInput">
+    <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-console"></i></span>
+      <input type="text" class="form-control" #cmd  placeholder="Command from here..."
+        (keyup.enter)="Execute(cmd)"
+        (keyup.arrowup)="SetLastCmd(cmd, -1)"
+        (keyup.arrowdown)="SetLastCmd(cmd, 1)">
+    </div>
+  </div>
+</div>

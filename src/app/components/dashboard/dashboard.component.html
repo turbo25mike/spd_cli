@@ -5,22 +5,3 @@
 <p>{{apiEnvironment}}</p>
 <p>{{apiLoggedIn}}</p>
 <p>{{searchPos}}
-<div class="row">
-  <div class="col-md-3">
-    <div class="list-group">
-      <div *ngFor="let event of eventLog.events">
-        <div class="list-group-item" [ngClass]="event.GetStatusClass()">
-          <h4 class="list-group-item-heading">{{event.request}}</h4>
-           <p class="list-group-item-text">{{event.response}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="input-group">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-console"></i></span>
-      <input type="text" class="form-control" #cmd  placeholder="Command from here..."
-        (keyup.enter)="Execute(cmd)"
-        (keyup.arrowup)="SetLastCmd(cmd, -1)"
-        (keyup.arrowdown)="SetLastCmd(cmd, 1)">
-    </div>
-  </div>
-</div>

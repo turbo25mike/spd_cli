@@ -13,13 +13,17 @@ export class EventLog{
   public events: Event[];
 
   constructor(){
-    this.events = new Array<Event>();
+    this.Clear();
   }
 
   public Push(request: string){
     var newEvent = new Event();
     newEvent.request = request;
     this.events.push(newEvent);
+  }
+
+  public Clear(){
+    this.events = new Array<Event>();
   }
 
   public SetSuccess(request: string, response: string){

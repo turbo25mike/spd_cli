@@ -1,0 +1,18 @@
+.console{
+  position: fixed;
+  bottom:50px;
+  left: 10px;
+  right:10px;
+}
+
+.consoleInput{
+  position: absolute;
+  bottom:0;
+}
+
+.eventLog{
+  margin-bottom: 50px;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

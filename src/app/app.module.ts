@@ -13,6 +13,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SitemapComponent } from './components/sitemap/sitemap.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ConsoleComponent } from './components/console/console.component';
 import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
 import {Http, RequestOptions} from '@angular/http';
 import {AuthHttp, AuthConfig} from 'angular2-jwt';
@@ -30,6 +31,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         CareersComponent,
         ContactComponent,
         ServicesComponent,
+        ConsoleComponent,
         WorkComponent,
         HomeComponent,
         SitemapComponent,
