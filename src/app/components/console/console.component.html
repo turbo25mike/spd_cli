@@ -19,9 +19,15 @@
     <div class="input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-console"></i></span>
       <input type="text" class="form-control" #cmd  placeholder="Command from here..."
-        (keyup.enter)="Execute(cmd)"
-        (keyup.arrowup)="SetLastCmd(cmd, -1)"
-        (keyup.arrowdown)="SetLastCmd(cmd, 1)">
+        (keyup.enter)="execute(cmd)"
+        (keyup.arrowup)="setLastCmd(cmd, -1)"
+        (keyup.arrowdown)="setLastCmd(cmd, 1)"
+        (focus)="hasFocus = true"
+        (blur)="hasFocus = false"
+        (input)="checkOptions($event.target.value)">
     </div>
+  </div>
+  <div class="consoleOptions" *ngIf="hasFocus">
+    <span class="option" *ngFor="let opt of currentOptions">{{opt}}</span>
   </div>
 </div>

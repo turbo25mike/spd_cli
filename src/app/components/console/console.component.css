@@ -1,13 +1,13 @@
 .console{
   position: fixed;
-  bottom:50px;
+  bottom:10px;
   left: 10px;
   right:10px;
 }
 
 .consoleInput{
   position: absolute;
-  bottom:0;
+  bottom:25px;
 }
 
 .eventLog{
@@ -15,4 +15,16 @@
   max-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.consoleOptions{
+  position: absolute;
+  bottom:0;
+  left:45px;
+}
+
+.option{
+  margin-right: 10px;
+  padding: 5px 10px;
+  color: lightgray;
 }

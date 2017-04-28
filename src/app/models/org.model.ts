@@ -2,31 +2,39 @@ import {Model} from './base.model';
 
 export class Org extends Model
 {
-    OrgID: number;
-    Name: string;
-    BillingID: number;
+  modelType: string = 'Org';
+
+    orgID: number;
+    name: string;
+    billingID: number;
 }
 
 export class OrgBilling extends Model
 {
-    OrgBillingID: number;
-    OrgID: number;
-    AmountDue: number;
-    DateDue: Date;
-    BillingMonth: number;
-    BillingYear: number;
+    modelType: string = 'OrgBilling';
+
+    orgBillingID: number;
+    orgID: number;
+    amountDue: number;
+    dateDue: Date;
+    billingMonth: number;
+    billingYear: number;
 
 }
 export class OrgCc extends Model
 {
-    OrgCCID: number;
-    OrgID: number;
-    CreditCardNumber: number;
+    modelType: string = 'OrgCc';
+
+    orgCCID: number;
+    orgID: number;
+    creditCardNumber: number;
 }
 
 export class OrgMember extends Model
 {
-    OrgMemberID: number;
-    OrgID: number;
-    MemberID: number;
+    modelType: string = 'OrgMember';
+
+    orgMemberID: number;
+    orgID: number;
+    memberID: number;
 }

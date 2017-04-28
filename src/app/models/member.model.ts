@@ -2,7 +2,7 @@ import {Model} from './base.model';
 
 export class Member extends Model
 {
-    MemberID: number;
-    LoginID : string;
-    UserName: string;
+    memberID: number;
+    loginID : string;
+    userName: string;
 }
