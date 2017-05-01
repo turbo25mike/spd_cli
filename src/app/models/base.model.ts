@@ -15,8 +15,12 @@ export class Model
 
     for(var i = 0; i < options.length; i++){
         var prop = mapManager.getOption(options[i].Key.toLowerCase());
-        if(prop !== null)
-          this[prop] = options[i].Value;
+        if(prop !== null){
+          if(options[i].Value === 'now()')
+              this[prop] = new Date(Date.now());
+          else
+            this[prop] = options[i].Value;
+        }
     }
   }
 }

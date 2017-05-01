@@ -14,10 +14,14 @@ export class UpVerb extends Verb {
   }
 
   run(optionManager: OptionManager) {
-    if (this.env.selectedObj.modelType === 'work') {
+    if(this.env.selectedObj == null){
+        this.router.navigate(['/dashboard']);
+        return;
+    }
+
       (this.env.selectedObj as Work).parentWorkID != null ?
         this.router.navigate(['/work', (this.env.selectedObj as Work).parentWorkID]) :
         this.router.navigate(['/dashboard']);
-    }
+    
   }
 }

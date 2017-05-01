@@ -16,15 +16,18 @@ export class ToVerb extends Verb {
   }
 
   run(optionManager: OptionManager) {
-    if (optionManager.optionsContain('-r'))
+    if (optionManager.optionsContain('-r')){
+    this.env.setSelectedWork(null);
       this.router.navigate(['/dashboard']);
+      return;
+    }
 
-    if (this.env.selectedObj == null || this.env.selectedObj.modelType === 'work') {
+
       this.env.setSelectedWork(optionManager.actions[0]);
       if (this.env.selectedObj == null)
         this.toastr.error('Not Found', 'Work ' + optionManager.actions[0]);
       else
         this.router.navigate(['/work', (this.env.selectedObj as Work).workID]);
-    }
+
   }
 }

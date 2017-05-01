@@ -19,12 +19,31 @@ export class Work extends Model
     startDate: Date;
     completeDate: Date;
 
-    optionMap: string = '-pwid parentWorkID -t title -d description -o owner -s size -p priority -h hoursWorked -std startDate -cd completeDate';
-
     children: Work[];
     members: Member[];
     tags: Tag[];
     status: WorkStatus;
+
+    optionMap: string = '-pwid parentWorkID -t title -d description -o owner -s size -p priority -h hoursWorked -std startDate -cd completeDate';
+
+    static fromJSONArray(array: Array<Work>): Work[] {
+      return array.map(obj => {
+        var w = new Work();
+        w.orgName = obj.orgName;
+        w.workID = obj.workID;
+        w.parentWorkID = obj.parentWorkID;
+        w.orgID = obj.orgID;
+        w.title = obj.title;
+        w.description = obj.description;
+        w.owner = obj.owner;
+        w.size = obj.size;
+        w.priority = obj.priority;
+        w.startDate = obj.startDate;
+        w.completeDate = obj.completeDate;
+        w.children = Work.fromJSONArray(obj.children);
+        return w;
+      });
+    }
 }
 
 export class WorkMember extends Model

@@ -27,23 +27,23 @@ export class ApiVerb extends Verb {
   run(optionManager: OptionManager) {
     switch (optionManager.actions[0].toLowerCase()) {
       case 'get':
-        this.listenToApiCall(this.apiService.Get(optionManager.actions[0]));
+        this.listenToApiCall(this.apiService.Get(optionManager.actions[1]));
         break;
       case 'post':
-        this.listenToApiCall(this.apiService.Post(optionManager.actions[0], JSON.parse(optionManager.actions[1])));
+        this.listenToApiCall(this.apiService.Post(optionManager.actions[1], JSON.parse(optionManager.actions[2])));
         break;
       case 'put':
-        this.listenToApiCall(this.apiService.Put(optionManager.actions[0], JSON.parse(optionManager.actions[1])));
+        this.listenToApiCall(this.apiService.Put(optionManager.actions[1], JSON.parse(optionManager.actions[2])));
         break;
       case 'delete':
-        this.listenToApiCall(this.apiService.Delete(optionManager.actions[0]));
+        this.listenToApiCall(this.apiService.Delete(optionManager.actions[1]));
         break;
     }
   }
 
   private listenToApiCall(apiCall: any) {
     apiCall.subscribe(
-      res => this.toastr.success(res.text().toString(), 'Successful Request'),
+      res => this.toastr.success(JSON.stringify(res), 'Successful Request'),
       err => this.HandleError(err)
     );
   }
@@ -53,7 +53,7 @@ export class ApiVerb extends Verb {
       this.auth.logout();
       this.router.navigate(['/home']);
     } else {
-      this.toastr.error('An error occured', err.message || err.statusText);
+      this.toastr.error(err.message || err.statusText, 'An error occured');
     }
   }
 }

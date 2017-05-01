@@ -13,5 +13,4 @@ personal
     </ul>
   </li>
 </ul>
-<p>Selected Org: {{env.selectedOrg.name}}</p>
-<p>Selected WorkID: [{{env.selectedWork.workID}}] {{env.selectedWork.title}}</p>
+<p *ngIf="env.selectedObj != null">Selected Object Type: {{env.selectedObj.modelType}}</p>

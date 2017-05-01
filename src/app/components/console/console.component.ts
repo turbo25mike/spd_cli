@@ -52,12 +52,12 @@ export class ConsoleComponent extends Verb {
 
   checkOptions(val) {
     if (val === '') {
-      this.currentOptions = this.options;
+      this.currentOptions = this.getCurrentOptions();
       return;
     }
     var actions = val.split(' ');
     if (actions === null) {
-      this.currentOptions = this.options;
+      this.currentOptions = this.getCurrentOptions();
       return;
     }
 

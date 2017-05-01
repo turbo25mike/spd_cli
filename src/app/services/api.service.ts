@@ -13,6 +13,7 @@ export class ApiService {
     constructor(http: Http, authHttp: AuthHttp) {
         this.http = http;
         this.authHttp = authHttp;
+
         this.uri = environment.apiUri;
     }
 
@@ -25,7 +26,7 @@ export class ApiService {
     }
 
     public Put(route, obj) {
-        return this.authHttp.put(this.uri + route, obj).map((res: Response) => res.json());
+        return this.authHttp.put(this.uri + route, obj);
     }
 
     public Delete(route) {

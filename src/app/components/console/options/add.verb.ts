@@ -28,18 +28,30 @@ export class AddVerb extends Verb {
   }
 
   run(optionManager: OptionManager) {
+    if(optionManager.actions.length > 0){
+        var model = new Work();
+        model.title = optionManager.actions[0];
 
-    var model = new Work();
-    model.title = optionManager.actions[0];
-
-    if (this.env.selectedObj !== null) {
-      model.parentWorkID = (this.env.selectedObj as Work).workID;
-      model.orgID = (this.env.selectedObj as Work).orgID;
+        if (this.env.selectedObj !== null) {
+          model.parentWorkID = (this.env.selectedObj as Work).workID;
+          model.orgID = (this.env.selectedObj as Work).orgID;
+        }
+        this.apiService.Post('work', model).subscribe(
+          res => this.toastr.success(res, 'Work Saved'),
+          err => this.toastr.error(err.statusText, 'Error Creating Work "' + optionManager.actions[0] + '"')
+        );
+        return;
     }
-    this.apiService.Post('work', model).subscribe(
-      res => this.toastr.success(res, 'Work Saved'),
-      err => this.toastr.error(err.statusText, 'Error Creating Work "' + optionManager.actions[0] + '"')
-    );
-
+    else if(this.env.selectedObj != null){
+      var work:Work = this.env.selectedObj as Work;
+      this.env.selectedObj.Map(optionManager.options);
+      this.apiService.Put('work', work).subscribe(
+        res => this.toastr.success('', 'Work Updated'),
+        err => this.toastr.error(err.message || err.statusText, 'Error Updating Work')
+      );
+    }
+    else{
+      this.toastr.error('We can not create or apply updates if neither a title or a selected object is given.', 'Error');
+    }
   }
 }

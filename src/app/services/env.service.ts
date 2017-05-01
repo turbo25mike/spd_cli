@@ -29,7 +29,7 @@ export class EnvService {
   private GetPersonalWork() {
     this.apiService.Get('work').subscribe(
       res => {
-        this.userWorkList = res as Work[];
+        this.userWorkList = Work.fromJSONArray(res);
       },
       err => this.HandleError(err)
     );
@@ -43,7 +43,7 @@ export class EnvService {
   }
 
   public setSelectedOrg(org: any) {
-    if (!org) return;
+    if (!org) this.selectedObj = null;
     if (typeof org === 'object') {
       this.selectedObj = org as Org;
       return;
