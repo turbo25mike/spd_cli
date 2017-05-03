@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import { ApiService } from './api.service';
 import { Work, WorkBreadCrumb } from '../models/work.model';
+import { Member } from '../models/member.model';
 import { Org } from '../models/org.model';
 import { Model } from '../models/base.model';
-import { Auth } from './auth.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Injectable()
@@ -12,20 +12,27 @@ export class EnvService {
   selectedObj: Model;
   orgsLoaded: Observable<any>;
   workLoaded: Observable<any>;
+  user: Member;
 
   userWorkList: Work[];
   orgs: Org[];
 
-  constructor(private apiService: ApiService, public auth: Auth, private router: Router) {
+  constructor(private apiService: ApiService, private router: Router) {
     this.orgsLoaded = this.GetOrgs();
     this.workLoaded = this.GetPersonalWork();
+    this.userUpdated();
   }
 
   private HandleError(err) {
     if (err.status === 401) {
-      this.auth.logout();
       this.router.navigate(['/home']);
     }
+  }
+
+  userUpdated(){
+    var json = localStorage.getItem('member');
+    if(!json) return;
+    this.user = Member.fromJSON(JSON.parse(json) as Member);
   }
 
   private GetPersonalWork() {
