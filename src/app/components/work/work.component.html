@@ -1,15 +1,70 @@
-Title {{currentWork.title}}<br />
-parentWorkID {{currentWork.parentWorkID}}<br />
-description {{currentWork.description}}<br />
-optionMap {{currentWork.optionMap}}<br />
-modelType {{currentWork.modelType}}<br />
-orgName: {{currentWork.orgName}}<br />
-workID: {{currentWork.workID}}<br />
-orgID: {{currentWork.orgID}}<br />
-owner: {{currentWork.owner}}<br />
-size: {{currentWork.size}}<br />
-priority: {{currentWork.priority}}<br />
-hoursWorked: {{currentWork.hoursWorked}}<br />
-startDate: {{currentWork.startDate}}<br />
-completeDate: {{currentWork.completeDate}}<br />
-status: {{currentWork.status}}<br />
+<div class="row">
+  <div class="col-md-10">
+    <ol class="breadcrumb">
+      <li *ngFor="let crumb of crumbTrail" class="active">
+        <a [routerLink]="['/work', crumb.workID]">
+        [{{crumb.workID}}] {{crumb.title}}</a>
+      </li>
+    </ol>
+    <h3>
+      [{{currentWork.workID}}] {{currentWork.title}}
+      <span class="label label-default" *ngFor="let tag of currentWork.tags">{{tag.name}}</span>
+    </h3>
+  </div>
+  <div class="col-md-2">
+    <img src="../../../assets/images/automap.jpg" width="50" height="50" /> owner: {{currentWork.owner}} status: {{currentWork.status}}
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2" *ngIf="currentWork.children && currentWork.children.length > 0">
+    <!-- Tab pane headers -->
+    <ul class="nav nav-tabs">
+      <li [class.active]="showActive"><a href="javascript:void(0)" (click)="showActive = true">Active</a></li>
+      <li [class.active]="!showActive"><a href="javascript:void(0)" (click)="showActive = false">Complete</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane" [class.active]="showActive">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let child of activeChildren">
+            <span class="badge">14</span> {{child.title}}
+          </li>
+        </ul>
+      </div>
+      <div class="tab-pane" [class.active]="!showActive">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let child of inactiveChildren">
+            <span class="badge">15</span> {{child.title}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-10">
+    <div class="row">
+      <div class="col-md-8">
+        <div>Description:{{currentWork.description}}</div>
+        <div>size: {{currentWork.size}}</div>
+        <div>priority: {{currentWork.priority}}</div>
+        <div>hoursWorked: {{currentWork.hoursWorked}}</div>
+        <div>dueDate: {{currentWork.completeDate}}</div>
+      </div>
+      <div class="col-md-4">
+        Message Board <i class="fa fa-star-o" aria-hidden="true"></i>
+        <div class="day-container">
+          <div class="day">April 17th</div>
+          <div class="message-container">
+            <img src="../../../assets/images/automap.jpg" width="50" height="50" />
+            <div>I just wanted to give a quick shout-out!</div>
+          </div>
+        </div>
+        <div class="newMessage-container">
+          <img src="../../../assets/images/automap.jpg" width="50" height="50" />
+          <textarea></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

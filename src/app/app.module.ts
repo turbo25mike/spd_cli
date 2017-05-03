@@ -11,6 +11,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
+import { LeftNavComponent } from './components/leftnav/leftnav.component';
 import { HomeComponent } from './components/home/home.component';
 import { WorkComponent } from './components/work/work.component';
 import { ServicesComponent } from './components/services/services.component';
@@ -34,6 +35,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   declarations: [
     AppComponent,
     NavMenuComponent,
+    LeftNavComponent,
     FooterComponent,
     CareersComponent,
     ContactComponent,

@@ -3,7 +3,7 @@ import { Injectable, ViewContainerRef } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { OptionManager } from '../../../models/optionManager';
 import { Org } from '../../../models/org.model';
-import { Work } from '../../../models/work.model';
+import { Work, WorkTag, Tag } from '../../../models/work.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { EnvService } from '../../../services/env.service';
 import { Verb } from './verb';
@@ -29,6 +29,19 @@ export class AddVerb extends Verb {
 
   run(optionManager: OptionManager) {
     if(optionManager.actions.length > 0){
+      if(optionManager.actions[0] === 'tag' && this.env.selectedObj != null){
+          this.apiService.Put('work/' + (this.env.selectedObj as Work).workID + '/tag/' + optionManager.actions[1], null).subscribe(
+            res => {
+              var newTag = new Tag();
+              newTag.name = optionManager.actions[1];
+              newTag.tagID = +res;
+              (this.env.selectedObj as Work).tags.push(newTag);
+
+              this.toastr.success('', 'Work Tag Saved');
+            },
+            err => this.toastr.error(err.statusText, 'Error Creating Work Tag "' + optionManager.actions[1] + '"')
+          );
+      }else{
         var model = new Work();
         model.title = optionManager.actions[0];
 
@@ -40,7 +53,7 @@ export class AddVerb extends Verb {
           res => this.toastr.success(res, 'Work Saved'),
           err => this.toastr.error(err.statusText, 'Error Creating Work "' + optionManager.actions[0] + '"')
         );
-        return;
+      }
     }
     else if(this.env.selectedObj != null){
       var work:Work = this.env.selectedObj as Work;

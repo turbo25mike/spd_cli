@@ -24,6 +24,9 @@ export class Work extends Model
     tags: Tag[];
     status: WorkStatus;
 
+    parentWorkTitle: string;
+    showChildren: boolean;
+
     optionMap: string = '-pwid parentWorkID -t title -d description -o owner -s size -p priority -h hoursWorked -std startDate -cd completeDate';
 
     static fromJSONArray(array: Array<Work>): Work[] {
@@ -41,9 +44,16 @@ export class Work extends Model
         w.startDate = obj.startDate;
         w.completeDate = obj.completeDate;
         w.children = Work.fromJSONArray(obj.children);
+        w.tags = new Array<Tag>();
         return w;
       });
     }
+}
+
+export class WorkBreadCrumb
+{
+    workID: number;
+    title: string;
 }
 
 export class WorkMember extends Model
@@ -59,6 +69,7 @@ export class WorkTag extends Model
     workTagID: number;
     workID: number;
     tagID: number;
+    tagName: string;
 }
 
 export class WorkStatus extends Model
@@ -73,5 +84,5 @@ export class Tag extends Model
 {
     modelType: string = 'Tag';
     tagID: number;
-    name: number;
+    name: string;
 }

@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 import { ApiService } from './api.service';
-import { Work } from '../models/work.model';
+import { Work, WorkBreadCrumb } from '../models/work.model';
 import { Org } from '../models/org.model';
 import { Model } from '../models/base.model';
 import { Auth } from './auth.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import 'rxjs/util/isNumeric';
 
 @Injectable()
 export class EnvService {
   selectedObj: Model;
+  orgsLoaded: Observable<any>;
+  workLoaded: Observable<any>;
 
   userWorkList: Work[];
   orgs: Org[];
 
   constructor(private apiService: ApiService, public auth: Auth, private router: Router) {
-    this.GetOrgs();
-    this.GetPersonalWork();
+    this.orgsLoaded = this.GetOrgs();
+    this.workLoaded = this.GetPersonalWork();
   }
 
   private HandleError(err) {
@@ -27,19 +29,21 @@ export class EnvService {
   }
 
   private GetPersonalWork() {
-    this.apiService.Get('work').subscribe(
-      res => {
-        this.userWorkList = Work.fromJSONArray(res);
-      },
+    var call =  this.apiService.Get('work');
+    call.subscribe(
+      res => this.userWorkList = Work.fromJSONArray(res),
       err => this.HandleError(err)
     );
+    return call;
   }
 
   private GetOrgs() {
-    this.apiService.Get('org').subscribe(
+    var call = this.apiService.Get('org');
+    call.subscribe(
       res => this.orgs = res as Org[],
       err => this.HandleError(err)
     );
+    return call;
   }
 
   public setSelectedOrg(org: any) {
@@ -56,12 +60,42 @@ export class EnvService {
   public setSelectedWork(work: any) {
     if (!work) return;
     if (typeof work === 'object') {
-      this.selectedObj = work as Work;
-      return;
+      work = (work as Work).workID;
     }
 
     var foundWork = this.find(work, this.userWorkList, ['title', 'workID', 'children'], isNaN(parseInt(work)));
+    if(foundWork != null && foundWork.parentWorkID != null)
+      {
+        var foundParent = this.find(foundWork.parentWorkID, this.userWorkList, ['title', 'workID', 'children'], false);
+        if(foundParent)
+          foundWork.parentWorkTitle = foundParent.title;
+      }
     this.selectedObj = foundWork;
+  }
+
+  getBreadcrumbs(workID: number, crumbTrail: WorkBreadCrumb[]): WorkBreadCrumb[]{
+    if(!workID)
+      return crumbTrail;
+    if(!crumbTrail)
+      crumbTrail = new Array<WorkBreadCrumb>();
+
+    var foundWork = this.find(workID.toString(), this.userWorkList, ['workID', 'children'], false);
+    if(foundWork == null) return crumbTrail;
+
+    var crumb = new WorkBreadCrumb();
+    crumb.title = (foundWork as Work).title;
+    crumb.workID = (foundWork as Work).workID;
+    crumbTrail.push(crumb);
+
+    if(foundWork.parentWorkID != null)
+      {
+        var crumbs = this.getBreadcrumbs((foundWork as Work).parentWorkID, crumbTrail);
+        if(crumbs != null){
+          crumbTrail = crumbTrail.concat(crumbs);
+        }
+      }
+
+    return crumbTrail;
   }
 
   private find(search: string, array: Array<any>, propList: Array<string>, stringSearch: boolean) {

@@ -22,14 +22,14 @@ export class ApiService {
     }
 
     public Post(route, obj) {
-        return this.authHttp.post(this.uri + route, obj).map((res: Response) => res.json());
+        return this.authHttp.post(this.uri + route, obj).map((res: Response) => res.text());
     }
 
     public Put(route, obj) {
-        return this.authHttp.put(this.uri + route, obj);
+        return this.authHttp.put(this.uri + route, obj).map((res: Response) => res.text());
     }
 
     public Delete(route) {
-        return this.authHttp.delete(this.uri + route).map((res: Response) => res.json());
+        return this.authHttp.delete(this.uri + route).map((res: Response) => res.text());
     }
 }
