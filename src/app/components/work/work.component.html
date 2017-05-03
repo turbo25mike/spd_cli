@@ -28,19 +28,18 @@
       <div class="tab-pane" [class.active]="showActive">
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let child of activeChildren">
-            <span class="badge">14</span> {{child.title}}
+            <span class="badge">{{child.workID}}</span> {{child.title}}
           </li>
         </ul>
       </div>
       <div class="tab-pane" [class.active]="!showActive">
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let child of inactiveChildren">
-            <span class="badge">15</span> {{child.title}}
+            <span class="badge">{{child.workID}}</span> {{child.title}}
           </li>
         </ul>
       </div>
     </div>
-
   </div>
   <div class="col-md-10">
     <div class="row">

@@ -1,10 +1,10 @@
 <div class='container-fluid'>
   <nav-menu></nav-menu>
   <div class="row">
-    <div class="col-md-1"  *ngIf="auth.authenticated()">
+    <div class="col-md-2"  *ngIf="auth.authenticated()">
       <left-nav></left-nav>
     </div>
-    <div class="col-md-11">
+    <div class="col-md-10">
     <router-outlet></router-outlet>
   </div>
   <console *ngIf="auth.authenticated()"></console>

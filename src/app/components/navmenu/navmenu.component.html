@@ -24,27 +24,39 @@
                 <li [routerLinkActive]="['link-active']" *ngIf="!auth.authenticated()">
                     <a [routerLink]="['/contact']">Project Managers</a>
                 </li> -->
-        <li [routerLinkActive]="['link-active']" *ngIf="auth.authenticated()">
-          <a [routerLink]="['/dashboard']">Dashboard</a>
-        </li>
-        <li>
-          <button class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
-          <button class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
-        </li>
+
       </ul>
 
-      <ul class='nav navbar-nav  navbar-right'>
+      <!-- visitor -->
+      <ul class='nav navbar-nav  navbar-right' *ngIf="!auth.authenticated()">
+        <li>
+          <a href="javascript:void(0)" (click)="auth.login()">Log in / Sign up</a>
+        </li>
         <li>
           <a class='linkedin' href='https://www.linkedin.com/company-beta/18017280' target='_blank'>Linkedin</a>
         </li>
         <li>
           <a class='facebook' href='https://fb.me/sprucest' target='_blank'>Facebook</a>
         </li>
+      </ul>
 
-        <!--<li>
-                    <button class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
-                    <button class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
-                </li>-->
+      <!-- user -->
+      <ul class='nav navbar-nav  navbar-right' *ngIf="auth.authenticated()">
+        <li>
+          <div class="dropdown" [class.open]="showUserOptions">
+            <a href="javascript:void(0)" (click)="showUserOptions = !showUserOptions" >
+              <img  [src]="env.user.picture" class="user-image" alt="user" width="50" height="50"/>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="javascript:void(0)" (click)="auth.logout()">log out</a></li>
+            </ul>
+          </div>
+        </li>
       </ul>
     </div>
   </div>

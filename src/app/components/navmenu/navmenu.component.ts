@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth } from '../../services/auth.service';
+import { EnvService } from '../../services/env.service';
 
 @Component({
     selector: 'nav-menu',
@@ -10,7 +11,7 @@ import { Auth } from '../../services/auth.service';
 export class NavMenuComponent {
     isCollapsed: boolean = true;
 
-    constructor(public auth: Auth) {
+    constructor(public auth: Auth, public env: EnvService) {
      }
 
     toggleCollapse(): void {
