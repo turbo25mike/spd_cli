@@ -29,6 +29,18 @@ export class Work extends Model
 
     optionMap: string = '-pwid parentWorkID -t title -d description -o owner -s size -p priority -h hoursWorked -std startDate -cd completeDate';
 
+    mapFromJSON(obj: Work) {
+        if(obj == null) return;
+        this.orgName = obj.orgName;
+        this.title = obj.title;
+        this.description = obj.description;
+        this.owner = obj.owner;
+        this.size = obj.size;
+        this.priority = obj.priority;
+        this.startDate = obj.startDate;
+        this.completeDate = obj.completeDate;
+    }
+
     static fromJSONArray(array: Array<Work>): Work[] {
       return array.map(obj => {
         var w = new Work();

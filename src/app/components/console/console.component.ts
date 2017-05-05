@@ -1,8 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { EventLog } from '../../models/event';
 import { Verb } from './options/verb';
-import { AddVerb } from './options/add.verb';
+import { AddVerb } from './options/add/add.verb';
+import { WorkVerb } from './options/add/work.verb';
+import { TagVerb } from './options/add/tag.verb';
 import { ApiVerb } from './options/api.verb';
+import { EditVerb } from './options/edit.verb';
 import { SpdVerb } from './options/spd/spd.verb';
 import { ToVerb } from './options/spd/to.verb';
 import { UpVerb } from './options/spd/up.verb';
@@ -11,7 +14,10 @@ import { OptionManager } from '../../models/optionManager';
 
 @Component({
   selector: 'console',
-  providers: [AddVerb, ApiVerb, SpdVerb, ToVerb, UpVerb],
+  providers: [AddVerb, WorkVerb, TagVerb,
+              ApiVerb,
+              SpdVerb, ToVerb, UpVerb,
+              EditVerb],
   templateUrl: './console.component.html',
   styleUrls: ['./console.component.css'],
   host: {
@@ -30,11 +36,12 @@ export class ConsoleComponent extends Verb {
   constructor(
     private toastr: ToastsManager,
     private add: AddVerb,
+    private edit: EditVerb,
     private spd: SpdVerb,
     private api: ApiVerb
   ) {
     super();
-    this.verbs = [spd, add, api];
+    this.verbs = [spd, add, api, edit];
     this.eventLog = new EventLog();
     this.options = ['clear'];
     this.currentOptions = this.getCurrentOptions();

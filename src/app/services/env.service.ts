@@ -6,10 +6,12 @@ import { Member } from '../models/member.model';
 import { Org } from '../models/org.model';
 import { Model } from '../models/base.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Injectable()
 export class EnvService {
   selectedObj: Model;
+  selectedObjLoaded: Observable<any>;
   orgsLoaded: Observable<any>;
   workLoaded: Observable<any>;
   user: Member;
@@ -17,7 +19,7 @@ export class EnvService {
   userWorkList: Work[];
   orgs: Org[];
 
-  constructor(private apiService: ApiService, private router: Router) {
+  constructor(private apiService: ApiService, private router: Router, private toastr: ToastsManager) {
     this.orgsLoaded = this.GetOrgs();
     this.workLoaded = this.GetPersonalWork();
     this.userUpdated();
@@ -70,14 +72,26 @@ export class EnvService {
       work = (work as Work).workID;
     }
 
-    var foundWork = this.find(work, this.userWorkList, ['title', 'workID', 'children'], isNaN(parseInt(work)));
-    if(foundWork != null && foundWork.parentWorkID != null)
+    var foundWork: Work = this.find(work, this.userWorkList, ['title', 'workID', 'children'], isNaN(parseInt(work)));
+    if(foundWork == null){
+      this.toastr.error('We could not find: ' + work + '. Please refresh the window to try again.');
+      return;
+    }
+
+    if(foundWork.parentWorkID != null)
       {
-        var foundParent = this.find(foundWork.parentWorkID, this.userWorkList, ['title', 'workID', 'children'], false);
+        var foundParent = this.find(foundWork.parentWorkID.toString(), this.userWorkList, ['title', 'workID', 'children'], false);
         if(foundParent)
           foundWork.parentWorkTitle = foundParent.title;
+
       }
-    this.selectedObj = foundWork;
+
+      this.selectedObj = foundWork;
+
+      this.apiService.Get('work/' + foundWork.workID).subscribe(
+        res => (this.selectedObj as Work).mapFromJSON(res),
+        err => this.HandleError(err)
+      );
   }
 
   getBreadcrumbs(workID: number, crumbTrail: WorkBreadCrumb[]): WorkBreadCrumb[]{
