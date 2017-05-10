@@ -5,7 +5,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ApiService } from '../../../services/api.service';
 import { OptionManager } from '../../../models/optionManager';
 import { Org } from '../../../models/org.model';
-import { Work, WorkTag, Tag } from '../../../models/work.model';
+import { Work, WorkTag } from '../../../models/work.model';
 import { EnvService } from '../../../services/env.service';
 import { Verb } from './verb';
 

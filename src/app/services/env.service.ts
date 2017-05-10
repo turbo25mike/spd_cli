@@ -87,14 +87,15 @@ export class EnvService {
       }
 
       this.selectedObj = foundWork;
-
-      this.apiService.Get('work/' + foundWork.workID).subscribe(
-        res => (this.selectedObj as Work).mapFromJSON(res),
-        err => this.HandleError(err)
-      );
   }
 
-  getBreadcrumbs(workID: number, crumbTrail: WorkBreadCrumb[]): WorkBreadCrumb[]{
+  getBreadcrumbs(): WorkBreadCrumb[]{
+    if(this.selectedObj == null) return new Array<WorkBreadCrumb>();
+
+    return this.getBreadcrumbHierarchy((this.selectedObj as Work).parentWorkID, null);
+  }
+
+  private getBreadcrumbHierarchy(workID: number, crumbTrail: WorkBreadCrumb[]): WorkBreadCrumb[]{
     if(!workID)
       return crumbTrail;
     if(!crumbTrail)
@@ -110,7 +111,7 @@ export class EnvService {
 
     if(foundWork.parentWorkID != null)
       {
-        var crumbs = this.getBreadcrumbs((foundWork as Work).parentWorkID, crumbTrail);
+        var crumbs = this.getBreadcrumbHierarchy((foundWork as Work).parentWorkID, crumbTrail);
         if(crumbs != null){
           crumbTrail = crumbTrail.concat(crumbs);
         }

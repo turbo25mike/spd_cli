@@ -1,6 +1,7 @@
-.leftnav{
-  background-color: #333;
-
-  display: table-cell;
-  float: none;
+.leftnav {
+  border-right: 1px solid #ababab;
+  padding-bottom: 100%;
+  margin-bottom: -100%;
 }
+
+.routerBody {}

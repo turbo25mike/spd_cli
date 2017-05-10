@@ -24,11 +24,10 @@
                 <li [routerLinkActive]="['link-active']" *ngIf="!auth.authenticated()">
                     <a [routerLink]="['/contact']">Project Managers</a>
                 </li> -->
-
       </ul>
 
       <!-- visitor -->
-      <ul class='nav navbar-nav  navbar-right' *ngIf="!auth.authenticated()">
+      <ul class='nav navbar-nav navbar-right' *ngIf="!auth.authenticated()">
         <li>
           <a href="javascript:void(0)" (click)="auth.login()">Log in / Sign up</a>
         </li>
@@ -45,7 +44,7 @@
         <li>
           <div class="dropdown" [class.open]="showUserOptions">
             <a href="javascript:void(0)" (click)="showUserOptions = !showUserOptions" >
-              <img  [src]="env.user.picture" class="user-image" alt="user" width="50" height="50"/>
+              <img  [src]="env.user.picture" class="user-image" alt="user" width="30" height="30"/>
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">

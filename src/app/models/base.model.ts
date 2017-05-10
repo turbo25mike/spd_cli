@@ -4,10 +4,15 @@ import { Option } from './option';
 export class Model
 {
   modelType: string;
+  createdByName: string;
   createdBy: Number;
   createdDate: Date;
+  updatedByName: string;
   updatedBy: Number;
   updatedDate: Date;
+  removedByName: string;
+  removedBy: Number;
+  removedByDate: Date;
   optionMap: string;
 
   public Map(options: Option[]){

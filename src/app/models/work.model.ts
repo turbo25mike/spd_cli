@@ -11,7 +11,7 @@ export class Work extends Model
     parentWorkID: number;
     orgID: number;
     title: string;
-    description: string;
+    status: string;
     owner: number;
     size: number;
     priority: number;
@@ -21,8 +21,7 @@ export class Work extends Model
 
     children: Work[];
     members: Member[];
-    tags: Tag[];
-    status: WorkStatus;
+    tags: WorkTag[];
 
     parentWorkTitle: string;
     showChildren: boolean;
@@ -33,7 +32,7 @@ export class Work extends Model
         if(obj == null) return;
         this.orgName = obj.orgName;
         this.title = obj.title;
-        this.description = obj.description;
+        this.status = obj.status;
         this.owner = obj.owner;
         this.size = obj.size;
         this.priority = obj.priority;
@@ -49,14 +48,14 @@ export class Work extends Model
         w.parentWorkID = obj.parentWorkID;
         w.orgID = obj.orgID;
         w.title = obj.title;
-        w.description = obj.description;
+        w.status = obj.status;
         w.owner = obj.owner;
         w.size = obj.size;
         w.priority = obj.priority;
         w.startDate = obj.startDate;
         w.completeDate = obj.completeDate;
         w.children = Work.fromJSONArray(obj.children);
-        w.tags = new Array<Tag>();
+        w.tags = new Array<WorkTag>();
         return w;
       });
     }
@@ -75,26 +74,19 @@ export class WorkMember extends Model
     workID: number;
 }
 
+export class WorkChat extends Model
+{
+    modelType: string = 'WorkChat';
+    workChatID: number;
+    workID: number;
+    message: string;
+}
+
 export class WorkTag extends Model
 {
     modelType: string = 'WorkTag';
     workTagID: number;
     workID: number;
-    tagID: number;
     tagName: string;
-}
-
-export class WorkStatus extends Model
-{
-    modelType: string = 'WorkStatus';
-    workStatusID: number;
-    workID: number;
-    description: string;
-}
-
-export class Tag extends Model
-{
-    modelType: string = 'Tag';
-    tagID: number;
-    name: string;
+    tagValue: string;
 }

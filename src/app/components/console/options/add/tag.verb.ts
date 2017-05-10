@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { EnvService } from '../../../../services/env.service';
 import { Verb } from '../verb';
-import { Work, Tag } from '../../../../models/work.model';
+import { Work, WorkTag } from '../../../../models/work.model';
 import { ApiService } from '../../../../services/api.service';
 
 @Injectable()
@@ -24,9 +24,10 @@ export class TagVerb extends Verb {
 
     this.apiService.Put('work/' + (this.env.selectedObj as Work).workID + '/tag/' + optionManager.actions[1], null).subscribe(
       res => {
-        var newTag = new Tag();
-        newTag.name = optionManager.actions[1];
-        newTag.tagID = +res;
+        var newTag = new WorkTag();
+        newTag.tagName = optionManager.actions[1];
+        if(optionManager.actions.length > 2)
+          newTag.tagValue = optionManager.actions[2];
         (this.env.selectedObj as Work).tags.push(newTag);
 
         this.toastr.success('', 'Work Tag Saved');
