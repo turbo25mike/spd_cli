@@ -33,11 +33,12 @@ export class Auth {
               this.lock.getUserInfo(authResult.accessToken, function(error, profile) {
                 if (error) return console.log(error);
                 localStorage.setItem('member', JSON.stringify(profile));
-                this.env.userUpdated();
+                if(this.env)
+                  this.env.userUpdated();
               });
 
               this.router.navigate(['/dashboard']);
-              
+
             });
         });
     }
