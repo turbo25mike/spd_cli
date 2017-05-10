@@ -21,7 +21,7 @@ export class EnvService {
 
   constructor(private apiService: ApiService, private router: Router, private toastr: ToastsManager) {
     this.orgsLoaded = this.GetOrgs();
-    this.workLoaded = this.GetPersonalWork();
+    this.workLoaded = this.GetWork();
     this.userUpdated();
   }
 
@@ -37,7 +37,7 @@ export class EnvService {
     this.user = Member.fromJSON(JSON.parse(json) as Member);
   }
 
-  private GetPersonalWork() {
+  private GetWork() {
     var call =  this.apiService.Get('work');
     call.subscribe(
       res => this.userWorkList = Work.fromJSONArray(res),
