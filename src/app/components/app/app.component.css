@@ -1,0 +1,6 @@
+.leftnav{
+  background-color: #333;
+
+  display: table-cell;
+  float: none;
+}

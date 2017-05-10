@@ -52,9 +52,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       useFactory: authHttpServiceFactory,
       deps: [Http, RequestOptions]
     },
+    Auth,
     EnvService,
     ApiService,
-    Auth
   ],
   imports: [
     BrowserAnimationsModule,
