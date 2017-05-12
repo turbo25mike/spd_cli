@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { EnvService } from '../../services/env.service';
-import { Work,WorkBreadCrumb, WorkChat } from '../../models/work.model';
+import { Work, WorkBreadCrumb, WorkChat } from '../../models/work.model';
 import { ApiService } from '../../services/api.service';
 
 @Component({
@@ -38,11 +38,10 @@ export class WorkComponent {
           err => this.HandleError(err)
         );
 
-
-          this.apiService.Get('work/' + params['id'] + "/chat").subscribe(
-            res => this.workChat = res as WorkChat[],
-            err => this.HandleError(err)
-          );
+        this.apiService.Get('work/' + params['id'] + "/chat").subscribe(
+          res => this.workChat = res as WorkChat[],
+          err => this.HandleError(err)
+        );
 
         this.env.workLoaded.subscribe(
           res => {
@@ -57,7 +56,6 @@ export class WorkComponent {
       }
     );
   }
-
 
   private HandleError(err) {
     if (err.status === 401) {
