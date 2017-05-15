@@ -14,15 +14,14 @@ export class EnvService {
   selectedObjLoaded: Observable<any>;
   orgsLoaded: Observable<any>;
   workLoaded: Observable<any>;
+  userLoaded: boolean;
   user: Member;
 
   userWorkList: Work[];
   orgs: Org[];
 
   constructor(private apiService: ApiService, private router: Router, private toastr: ToastsManager) {
-    this.orgsLoaded = this.GetOrgs();
-    this.workLoaded = this.GetWork();
-    this.userUpdated();
+    this.GetUser();
   }
 
   private HandleError(err) {
@@ -31,14 +30,21 @@ export class EnvService {
     }
   }
 
-  userUpdated(){
-    var json = localStorage.getItem('member');
-    if(!json) return;
-    this.user = Member.fromJSON(JSON.parse(json) as Member);
+  private GetUser() {
+    var call = this.apiService.Get('member');
+    call.subscribe(
+      res => {
+        this.user = res as Member;
+        this.userLoaded = true;
+        this.orgsLoaded = this.GetOrgs();
+        this.workLoaded = this.GetWork();
+      },
+      err => console.log(err)
+    );
   }
 
   private GetWork() {
-    var call =  this.apiService.Get('work');
+    var call = this.apiService.Get('work');
     call.subscribe(
       res => this.userWorkList = Work.fromJSONArray(res),
       err => this.HandleError(err)
@@ -73,60 +79,58 @@ export class EnvService {
     }
 
     var foundWork: Work = this.find(work, this.userWorkList, ['title', 'workID', 'children'], isNaN(parseInt(work)));
-    if(foundWork == null){
+    if (foundWork == null) {
       this.toastr.error('We could not find: ' + work + '. Please refresh the window to try again.');
       return;
     }
 
-    if(foundWork.parentWorkID != null)
-      {
-        var foundParent = this.find(foundWork.parentWorkID.toString(), this.userWorkList, ['title', 'workID', 'children'], false);
-        if(foundParent)
-          foundWork.parentWorkTitle = foundParent.title;
+    if (foundWork.parentWorkID != null) {
+      var foundParent = this.find(foundWork.parentWorkID.toString(), this.userWorkList, ['title', 'workID', 'children'], false);
+      if (foundParent)
+        foundWork.parentWorkTitle = foundParent.title;
 
-      }
+    }
 
-      this.selectedObj = foundWork;
+    this.selectedObj = foundWork;
   }
 
-  getBreadcrumbs(): WorkBreadCrumb[]{
-    if(this.selectedObj == null) return new Array<WorkBreadCrumb>();
+  getBreadcrumbs(): WorkBreadCrumb[] {
+    if (this.selectedObj == null) return new Array<WorkBreadCrumb>();
 
     return this.getBreadcrumbHierarchy((this.selectedObj as Work).parentWorkID, null);
   }
 
-  private getBreadcrumbHierarchy(workID: number, crumbTrail: WorkBreadCrumb[]): WorkBreadCrumb[]{
-    if(!workID)
+  private getBreadcrumbHierarchy(workID: number, crumbTrail: WorkBreadCrumb[]): WorkBreadCrumb[] {
+    if (!workID)
       return crumbTrail;
-    if(!crumbTrail)
+    if (!crumbTrail)
       crumbTrail = new Array<WorkBreadCrumb>();
 
     var foundWork = this.find(workID.toString(), this.userWorkList, ['workID', 'children'], false);
-    if(foundWork == null) return crumbTrail;
+    if (foundWork == null) return crumbTrail;
 
     var crumb = new WorkBreadCrumb();
     crumb.title = (foundWork as Work).title;
     crumb.workID = (foundWork as Work).workID;
     crumbTrail.push(crumb);
 
-    if(foundWork.parentWorkID != null)
-      {
-        var crumbs = this.getBreadcrumbHierarchy((foundWork as Work).parentWorkID, crumbTrail);
-        if(crumbs != null){
-          crumbTrail = crumbTrail.concat(crumbs);
-        }
+    if (foundWork.parentWorkID != null) {
+      var crumbs = this.getBreadcrumbHierarchy((foundWork as Work).parentWorkID, crumbTrail);
+      if (crumbs != null) {
+        crumbTrail = crumbTrail.concat(crumbs);
       }
+    }
 
     return crumbTrail;
   }
 
   private find(search: string, array: Array<any>, propList: Array<string>, stringSearch: boolean) {
-    if(array == null) return null;
+    if (array == null) return null;
     for (var i = 0; i < array.length; i++) {
       for (var j = 0; j < propList.length; j++) {
-        if(typeof array[i][propList[j]] === 'object'){
+        if (typeof array[i][propList[j]] === 'object') {
           var found = this.find(search, array[i][propList[j]], propList, stringSearch);
-          if(found)
+          if (found)
             return found;
         }
         else if ((stringSearch && array[i][propList[j]].indexOf(search) > -1) || array[i][propList[j]] == search)

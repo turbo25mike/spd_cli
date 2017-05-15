@@ -25,9 +25,11 @@ export class TagVerb extends Verb {
     this.apiService.Put('work/' + (this.env.selectedObj as Work).workID + '/tag/' + optionManager.actions[1], null).subscribe(
       res => {
         var newTag = new WorkTag();
-        newTag.tagName = optionManager.actions[1];
+        newTag.title = optionManager.actions[1];
         if(optionManager.actions.length > 2)
-          newTag.tagValue = optionManager.actions[2];
+          newTag.value = optionManager.actions[2];
+          if(optionManager.actions.length > 3)
+            newTag.color = optionManager.actions[3];
         (this.env.selectedObj as Work).tags.push(newTag);
 
         this.toastr.success('', 'Work Tag Saved');

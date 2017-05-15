@@ -41,7 +41,7 @@
 
       <!-- user -->
       <ul class='nav navbar-nav  navbar-right' *ngIf="auth.authenticated()">
-        <li>
+        <li *ngIf="env.userLoaded">
           <div class="dropdown" [class.open]="showUserOptions">
             <a href="javascript:void(0)" (click)="showUserOptions = !showUserOptions" >
               <img  [src]="env.user.picture" class="user-image" alt="user" width="30" height="30"/>

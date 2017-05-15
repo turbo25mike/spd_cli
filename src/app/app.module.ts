@@ -22,9 +22,9 @@ import { SitemapComponent } from './components/sitemap/sitemap.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ConsoleComponent } from './components/console/console.component';
 
+import { Auth } from './services/auth.service';
 import { ApiService } from './services/api.service';
 import { EnvService } from './services/env.service';
-import { Auth } from './services/auth.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({}), http, options);
@@ -53,8 +53,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       deps: [Http, RequestOptions]
     },
     Auth,
-    EnvService,
     ApiService,
+    EnvService
   ],
   imports: [
     BrowserAnimationsModule,

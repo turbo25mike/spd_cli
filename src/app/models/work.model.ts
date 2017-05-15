@@ -12,7 +12,7 @@ export class Work extends Model
     orgID: number;
     title: string;
     status: string;
-    owner: number;
+    ownerID: number;
     size: number;
     priority: number;
     hoursWorked: number;
@@ -25,6 +25,7 @@ export class Work extends Model
 
     parentWorkTitle: string;
     showChildren: boolean;
+    owner: Member;
 
     optionMap: string = '-pwid parentWorkID -t title -d description -o owner -s size -p priority -h hoursWorked -std startDate -cd completeDate';
 
@@ -33,7 +34,7 @@ export class Work extends Model
         this.orgName = obj.orgName;
         this.title = obj.title;
         this.status = obj.status;
-        this.owner = obj.owner;
+        this.ownerID = obj.ownerID;
         this.size = obj.size;
         this.priority = obj.priority;
         this.startDate = obj.startDate;
@@ -49,7 +50,7 @@ export class Work extends Model
         w.orgID = obj.orgID;
         w.title = obj.title;
         w.status = obj.status;
-        w.owner = obj.owner;
+        w.ownerID = obj.ownerID;
         w.size = obj.size;
         w.priority = obj.priority;
         w.startDate = obj.startDate;
@@ -74,12 +75,28 @@ export class WorkMember extends Model
     workID: number;
 }
 
+export class WorkChatDateGroup
+{
+  constructor(date: Date){
+    this.date = date;
+  }
+  date: Date;
+  chatList: WorkChat[];
+
+  public add(chat: WorkChat){
+    if(this.chatList == null)
+      this.chatList = new Array<WorkChat>();
+    this.chatList.push(chat);
+  }
+}
+
 export class WorkChat extends Model
 {
     modelType: string = 'WorkChat';
     workChatID: number;
     workID: number;
     message: string;
+    member: Member;
 }
 
 export class WorkTag extends Model
@@ -87,6 +104,23 @@ export class WorkTag extends Model
     modelType: string = 'WorkTag';
     workTagID: number;
     workID: number;
-    tagName: string;
-    tagValue: string;
+    title: string;
+    value: string;
+    color: string;
+}
+
+export class Ticket extends Model
+{
+    ticketID: string = 'Ticket';
+    resolved: boolean;
+    status: string;
+    chatList: TicketChat[];
+}
+
+export class TicketChat extends Model
+{
+    ticketChatID: string = 'TicketChat';
+    workID: number;
+    message: string;
+    member: Member;
 }
