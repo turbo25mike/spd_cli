@@ -34,6 +34,7 @@ export class WorkComponent {
     this.inactiveChildren = new Array<Work>();
     this.tags = new Array<WorkTag>();
     this.crumbTrail = new Array<WorkBreadCrumb>();
+    this.tickets = new Array<Ticket>();
   }
 
   ngOnInit() {
@@ -71,7 +72,7 @@ export class WorkComponent {
       err => this.HandleError(err)
     );
 
-    this.apiService.Get('ticket/work/' + workID + "/open").subscribe(
+    this.apiService.Get('work/' + workID + "/ticket/open").subscribe(
       res => this.tickets = res as Ticket[],
       err => this.HandleError(err)
     );
