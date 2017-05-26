@@ -56,6 +56,13 @@
           </button>
         </div>
         <div>Tickets {{tickets.length}}</div>
+        <div *ngFor="let ticket of tickets">
+            Ticket Created: {{ticket.createdDate}}
+            <h3>Discussion</h3>
+            <div *ngFor="let ticketchat of ticket.chatList">
+              {{ticketchat.createdBy}}: {{ticketchat.message}}
+            </div>
+        </div>
       </div>
       <div class="col-md-4">
         Message Board <i class="fa fa-star-o" aria-hidden="true"></i>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { EnvService } from '../../services/env.service';
-import { Work, WorkBreadCrumb, WorkChat, WorkChatDateGroup, WorkTag, Ticket } from '../../models/work.model';
+import { Work, WorkBreadCrumb, WorkChat, WorkChatDateGroup, WorkTag, Ticket, TicketChat } from '../../models/work.model';
 import { Member } from '../../models/member.model';
 import { ApiService } from '../../services/api.service';
 
@@ -11,7 +11,7 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./work.component.css']
 })
 export class WorkComponent {
-  id: number;
+  id: Number;
   currentWork: Work;
   tags: WorkTag[];
   activeChildren: Work[];
@@ -44,6 +44,7 @@ export class WorkComponent {
   }
 
   private getWorkMembers(workID: Number){
+    this.id = workID;
     this.apiService.Get('work/' + workID + "/member").subscribe(
       res => {
         this.workMembers = res as Member[];
@@ -73,7 +74,21 @@ export class WorkComponent {
     );
 
     this.apiService.Get('work/' + workID + "/ticket/open").subscribe(
-      res => this.tickets = res as Ticket[],
+      res => {
+        this.tickets = res as Ticket[];
+        if(this.tickets != null && this.tickets.length > 0){
+          this.getTicketChat(this.tickets[0]);
+        }
+      },
+      err => this.HandleError(err)
+    );
+  }
+
+  private getTicketChat(ticket:Ticket){
+    this.apiService.Get('work/' + this.id + "/ticket/" + ticket.ticketID +"/chat").subscribe(
+      res => {
+        ticket.chatList = res as TicketChat[];
+      },
       err => this.HandleError(err)
     );
   }
