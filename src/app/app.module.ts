@@ -27,7 +27,9 @@ import { ApiService } from './services/api.service';
 import { EnvService } from './services/env.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig({}), http, options);
+  return new AuthHttp(new AuthConfig({
+    tokenGetter: (() => localStorage.getItem('token'))
+  }), http, options);
 }
 
 @NgModule({

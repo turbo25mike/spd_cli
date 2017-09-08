@@ -1,53 +1,61 @@
 // auth.service.ts
 
-import { Injectable }      from '@angular/core';
-import { tokenNotExpired } from 'angular2-jwt';
-import { Router, NavigationStart } from '@angular/router';
-import { Member } from '../models/member.model';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
-
-// Avoid name not found warnings
-//declare var Auth0Lock: any;
-let Auth0Lock = require('auth0-lock').default;
+import * as auth0 from 'auth0-js';
 
 
 @Injectable()
 export class Auth {
-    // Configure Auth0
-    lock = new Auth0Lock('VRuQOIlWkBs3WEwjwafACwuY43tWZ5Tn', 'spd.auth0.com');
 
-    constructor(public router: Router) {
-        // Add callback for lock `authenticated` event
-        // this.lock.on("authenticated", (authResult) => {
-        //     localStorage.setItem('id_token', authResult.idToken);
-        // });
-        this.router.events
-          .filter(event => event instanceof NavigationStart)
-          .filter((event: NavigationStart) => (/access_token|id_token|token|error/).test(event.url))
-          .subscribe(() => {
-            this.lock.resumeAuth(window.location.hash, (error, authResult) => {
-              if (error) return console.log(error);
-              localStorage.setItem('token', authResult.idToken);
+  auth0 = new auth0.WebAuth({
+    clientID: 'VRuQOIlWkBs3WEwjwafACwuY43tWZ5Tn',
+    domain: 'spd.auth0.com',
+    responseType: 'token id_token',
+    audience: 'https://spd.auth0.com/userinfo',
+    redirectUri: 'http://localhost:4200',
+    scope: 'openid'
+  });
 
-              this.router.navigate(['/dashboard']);
+  constructor(public router: Router) {}
 
-            });
-        });
-    }
+  public login(): void {
+    this.auth0.authorize();
+  }
 
-    public login() {
-        // Call the show method to display the widget.
-        this.lock.show();
-    }
+  public authenticated() {
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    return new Date().getTime() < expiresAt;
+  }
 
-    public authenticated() {
-        // Check if there's an unexpired JWT
-        // This searches for an item in localStorage with key == 'id_token'
-        return tokenNotExpired();
-    }
+  public handleAuthentication(): void {
+    this.auth0.parseHash((err, authResult) => {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        window.location.hash = '';
+        this.setSession(authResult);
+        this.router.navigate(['/dashboard']);
+      } else if (err) {
+        this.router.navigate(['/dashboard']);
+        console.log(err);
+      }
+    });
+  }
 
-    public logout() {
-        // Remove token from localStorage
-        localStorage.removeItem('token');
-    }
+  private setSession(authResult): void {
+    // Set the time that the access token will expire at
+    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('token', authResult.idToken);
+    localStorage.setItem('expires_at', expiresAt);
+  }
+
+  public logout(): void {
+    // Remove tokens and expiry time from localStorage
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('token');
+    localStorage.removeItem('expires_at');
+    // Go back to the home route
+    this.router.navigate(['/']);
+  }
 }
