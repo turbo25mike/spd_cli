@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Org } from '../../models/org.model';
-import { Work } from '../../models/work.model';
-import { EnvService } from '../../services/env.service';
+import { Auth } from '../../services/auth.service';
+import { QueryService } from '../../services/query.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
     selector: 'dashboard',
@@ -9,6 +9,9 @@ import { EnvService } from '../../services/env.service';
     styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-    public searchPos: number = 0;
-    constructor(public env: EnvService) {}
+  tableList: Observable<any>;
+  
+    constructor(private queryService: QueryService) {
+      queryService.getTables(this.tableList);
+    }
 }

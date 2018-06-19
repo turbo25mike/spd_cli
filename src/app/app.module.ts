@@ -11,20 +11,13 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
-import { LeftNavComponent } from './components/leftnav/leftnav.component';
 import { HomeComponent } from './components/home/home.component';
-import { WorkComponent } from './components/work/work.component';
-import { ServicesComponent } from './components/services/services.component';
-import { CareersComponent } from './components/careers/careers.component';
-import { ContactComponent } from './components/contact/contact.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { SitemapComponent } from './components/sitemap/sitemap.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ConsoleComponent } from './components/console/console.component';
 
 import { Auth } from './services/auth.service';
 import { ApiService } from './services/api.service';
 import { EnvService } from './services/env.service';
+import { QueryService } from './services/query.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -37,15 +30,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   declarations: [
     AppComponent,
     NavMenuComponent,
-    LeftNavComponent,
-    FooterComponent,
-    CareersComponent,
-    ContactComponent,
-    ServicesComponent,
-    ConsoleComponent,
-    WorkComponent,
     HomeComponent,
-    SitemapComponent,
     DashboardComponent
   ],
   providers: [
@@ -56,7 +41,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     },
     Auth,
     ApiService,
-    EnvService
+    EnvService,
+    QueryService
   ],
   imports: [
     BrowserAnimationsModule,
@@ -68,11 +54,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
-      { path: 'services', component: ServicesComponent },
-      { path: 'work/:id', component: WorkComponent },
-      { path: 'careers', component: CareersComponent },
-      { path: 'contact', component: ContactComponent },
-      { path: 'sitemap', component: SitemapComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: '**', redirectTo: 'home' }
     ])

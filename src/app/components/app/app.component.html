@@ -1,11 +1,7 @@
 <div class='container-fluid'>
   <nav-menu></nav-menu>
   <div class="row">
-    <div class="col-md-2 leftnav" *ngIf="auth.authenticated()">
-      <left-nav></left-nav>
-    </div>
-    <div class="col-md-10 routerBody">
+    <div class="col-md-10">
     <router-outlet></router-outlet>
   </div>
-  <console *ngIf="auth.authenticated()"></console>
 </div>
